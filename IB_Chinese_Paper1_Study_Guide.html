@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IB Chinese A Paper 1｜寫作指南與回饋</title>
+  <style>
+    :root {
+      --bg: #f5f4f1;
+      --paper: #ffffff;
+      --ink: #252525;
+      --muted: #6f6b66;
+      --line: #e3dfd8;
+      --accent: #b55f3d;
+      --accent-soft: #f7eee8;
+      --user: #e9e5de;
+      --soft: #faf9f7;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK TC", "Noto Sans CJK SC", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.85;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      background: rgba(245,244,241,.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .toolbar span { color: var(--muted); font-size: 13px; }
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 10px 18px;
+      background: var(--accent);
+      color: white;
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    main { max-width: 920px; margin: 0 auto; padding: 32px 28px 64px; }
+    .cover {
+      padding: 34px 38px;
+      margin-bottom: 34px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 10px 0 8px; font-size: 32px; line-height: 1.35; }
+    .subtitle { margin: 0 0 22px; color: var(--muted); }
+    .toc { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .toc a { color: var(--ink); text-decoration: none; font-size: 14px; }
+    .toc a:hover { color: var(--accent); }
+    .turn { margin: 0 0 34px; scroll-margin-top: 76px; }
+    .role {
+      margin: 0 0 8px 4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+    .bubble {
+      padding: 26px 32px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 3px 14px rgba(40,35,30,.035);
+      overflow-wrap: anywhere;
+    }
+    .user .bubble {
+      width: 88%;
+      margin-left: auto;
+      padding: 20px 26px;
+      background: var(--user);
+      border: 0;
+      border-radius: 16px 16px 4px 16px;
+      box-shadow: none;
+    }
+    .assistant .bubble { border-radius: 4px 16px 16px 16px; }
+    h2 {
+      margin: 30px 0 10px;
+      font-size: 21px;
+      line-height: 1.5;
+      break-after: avoid-page;
+    }
+    h2:first-child, h3:first-child { margin-top: 0; }
+    h3 { margin: 24px 0 8px; font-size: 17px; line-height: 1.5; break-after: avoid-page; }
+    p { margin: 10px 0; }
+    ul, ol { margin: 8px 0 14px; padding-left: 25px; }
+    li { margin: 4px 0; }
+    strong { font-weight: 700; }
+    blockquote {
+      margin: 12px 0;
+      padding: 12px 18px;
+      border-left: 3px solid var(--accent);
+      background: var(--soft);
+      color: #373330;
+      border-radius: 0 8px 8px 0;
+      break-inside: avoid-page;
+    }
+    blockquote p { margin: 0; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 26px 0; }
+    .lead { font-size: 17px; }
+    .note {
+      padding: 13px 17px;
+      background: var(--accent-soft);
+      border-radius: 9px;
+      color: #59463d;
+      break-inside: avoid-page;
+    }
+    .comment {
+      margin: -4px 0 18px;
+      padding: 10px 15px;
+      background: #f2f6f7;
+      border-left: 3px solid #78939d;
+      border-radius: 0 8px 8px 0;
+      break-inside: avoid-page;
+    }
+    .label {
+      display: inline-block;
+      margin: 14px 0 4px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .03em;
+    }
+    .student-text { white-space: pre-wrap; }
+    .footer {
+      margin-top: 38px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+    @page { size: A4; margin: 14mm 13mm 15mm; }
+    @media print {
+      body { background: white; font-size: 10.5pt; line-height: 1.7; }
+      .toolbar { display: none; }
+      main { max-width: none; padding: 0; margin: 0; }
+      .cover { padding: 22px 26px; border-radius: 12px; box-shadow: none; }
+      .turn { margin-bottom: 24px; }
+      .bubble { padding: 18px 22px; box-shadow: none; border-radius: 10px; }
+      .user .bubble { width: 100%; padding: 15px 20px; }
+      h1 { font-size: 24pt; }
+      h2 { font-size: 15pt; margin-top: 22px; }
+      h3 { font-size: 12pt; }
+      .toc { grid-template-columns: 1fr 1fr; }
+      a { color: inherit; text-decoration: none; }
+      .role { margin-top: 0; }
+      .turn, .cover { break-inside: auto; }
+      p, li { orphans: 3; widows: 3; }
+    }
+    @media (max-width: 640px) {
+      main { padding: 20px 14px 42px; }
+      .cover, .bubble { padding: 20px; }
+      .user .bubble { width: 96%; }
+      .toc { grid-template-columns: 1fr; }
+      .toolbar span { display: none; }
+      .toolbar { justify-content: flex-end; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <span>导出时建议开启“背景图形”，边距选择“默认”。</span>
+    <button id="print" type="button">列印 / 儲存為 PDF</button>
+  </div>
+  <main>
+    <header class="cover">
+      <div class="eyebrow">IBDP Chinese A · Language and Literature</div>
+      <h1>Paper 1 寫作指南與回饋</h1>
+      <p class="subtitle">從四項評核標準、段落診斷到最高檔寫作示例</p>
+      <nav class="toc" aria-label="目錄">
+        <a href="#s1">01　如何寫好一篇卷一</a>
+        <a href="#s2">02　具體解釋四個 Criterion</a>
+        <a href="#s3">03　段落修改示範</a>
+        <a href="#s4">04　段落批註與整體回饋</a>
+        <a href="#s5">05　怎樣爭取最高檔表現</a>
+        <a href="#s6">06　普通寫法與深入寫法示例</a>
+      </nav>
+    </header>
+
+    <section class="turn user" id="s1">
+      <div class="role">你</div>
+      <div class="bubble"><p>如何写好一篇卷一？</p></div>
+    </section>
+    <section class="turn assistant">
+      <div class="role">CLAUDE</div>
+      <div class="bubble">
+        <p class="lead">写好卷一的关键，不是“找出最多手法”，而是持续回答一个问题：</p>
+        <blockquote><p><strong>作者如何通过具体的语言、结构或视觉选择，使特定读者产生某种理解、感受或行动，从而实现文本的交流目的？</strong></p></blockquote>
+        <p>以下主要是<strong>指南建议</strong>，不是必须机械套用的得分公式。</p>
+        <h2>一、动笔前：先建立全文中心</h2>
+        <p>从原文和引导题中确定五件事：</p>
+        <ol>
+          <li><strong>文本类型</strong>：广告、新闻、评论、演讲、漫画等，不同类型有不同分析重点。</li>
+          <li><strong>语境</strong>：发布平台、社会文化背景、写作场合；只写与文本有关的背景。</li>
+          <li><strong>目标读者</strong>：不要只写“大众”，尽量具体到读者的身份、需求、兴趣或处境。</li>
+          <li><strong>交流目的</strong>：除“传递信息”外，还要考虑文本希望读者相信什么、感受什么或采取什么行动。</li>
+          <li><strong>中心论点</strong>：作者主要通过哪两三组选择实现上述目的？</li>
+        </ol>
+        <p>可以用一句话整理思路：</p>
+        <blockquote><p>这篇刊登于______的______，主要面向______，通过______、______和______，引导读者______，从而实现______的目的。</p></blockquote>
+        <p>这只是组织信息的支架；具体内容必须来自原文，不能凭文本类型猜背景。</p>
+        <h2>二、引言：短而准确，提出分析方向</h2>
+        <p>引言通常完成四项任务：</p>
+        <ul>
+          <li>点明必要的语境与文本类型；</li>
+          <li>界定目标读者；</li>
+          <li>分析表层及较深层交流目的；</li>
+          <li>提出全文的两三个分析方向。</li>
+        </ul>
+        <p>引言不要写成长篇背景介绍，也不要只罗列“本文将分析语言、结构和修辞”。较好的方向句应说明：<strong>这些选择怎样共同服务于读者与目的。</strong></p>
+        <h2>三、主体段：完整写出分析链</h2>
+        <p>每段集中证明一个分论点，并尽量形成：</p>
+        <blockquote><p><strong>作者选择 → 精确证据 → 运作机制 → 特定读者的效果 → 交流目的 → 必要时的评价</strong></p></blockquote>
+        <p>例如，不要只写：</p>
+        <blockquote><p>作者运用反问和排比，增强语气，生动形象，吸引读者。</p></blockquote>
+        <p>应继续追问：</p>
+        <ul>
+          <li>反问把什么问题交给了读者？</li>
+          <li>排比集中强调了哪些内容？</li>
+          <li>为什么这种表达对该读者群尤其有说服力？</li>
+          <li>它如何推动文本的说服、宣传或批判目的？</li>
+        </ul>
+        <p>可以写成：</p>
+        <blockquote><p>作者先以反问将______转化为读者需要回应的问题，再通过排比集中呈现______，突出______的紧迫感。对于______读者而言，这不仅使其注意到______，也促使其重新审视______，从而推进文本______的目的。</p></blockquote>
+        <p>重点不是套用句式，而是补上“<strong>为什么会产生这种效果</strong>”这一层。</p>
+        <h2>四、组织：分论点要有区别，也要有推进</h2>
+        <p>两三个充分发展的主体段，通常比五六个只写两三句的“手法段”更有效。可以按文本特点组织为：</p>
+        <ul>
+          <li>视觉与版面如何建立第一印象；</li>
+          <li>语言与修辞如何塑造态度和情感；</li>
+          <li>结构与图文关系如何引导理解并促成回应。</li>
+        </ul>
+        <p>这只是其中一种思路。每段开头检查：<strong>这一段的新观点是什么？</strong>如果两段只是换例子重复“吸引读者”，就应合并或重新划分。</p>
+        <p>段末要回扣中心，但不必每次机械重复“因此达到了交流目的”。</p>
+        <h2>五、评价：判断“是否有效”，并给出依据</h2>
+        <p>评价不是额外加一句“十分成功”，也不是为了显得深刻而硬找缺点。可以判断：</p>
+        <ul>
+          <li>某个选择为什么特别适合这类读者和发布平台；</li>
+          <li>多个选择如何相互配合；</li>
+          <li>某项表达是否可能让部分读者感到说教、信息不足或理解困难。</li>
+        </ul>
+        <p>任何局限性都要落到具体文本及其对读者、目的的实际影响。</p>
+        <h2>六、结论与语言</h2>
+        <p>结论应综合全文：这些选择如何共同塑造读者反应、实现目的，而不是再列一次“比喻、排比、拟人”。</p>
+        <p>表达上尽量少用空泛词语：</p>
+        <ul>
+          <li>“生动形象” → 具体写出突出了什么特征；</li>
+          <li>“吸引读者” → 写出吸引哪类读者注意什么；</li>
+          <li>“增强说服力” → 写出改变了读者的什么认识或态度；</li>
+          <li>“运用对比” → 写明比较双方及差异所凸显的意义。</li>
+        </ul>
+        <h2>写完后的快速检查</h2>
+        <ul>
+          <li><strong>A 理解诠释</strong>：读者、语境、目的是否准确且具体？</li>
+          <li><strong>B 分析评价</strong>：是否解释了手法如何产生效果，而非只命名和引用？</li>
+          <li><strong>C 组织</strong>：每段是否有独立分论点，全文是否围绕同一中心推进？</li>
+          <li><strong>D 表达</strong>：术语是否准确，句子是否清晰，是否避免了空泛套话？</li>
+        </ul>
+        <p class="note"><strong>一个最实用的练习</strong>：拿自己写好的一个主体段，在每句旁标出“选择、证据、机制、读者、目的、评价”。缺了哪一环，就优先补哪一环；这通常比继续增加手法和引文更有效。</p>
+      </div>
+    </section>
+
+    <section class="turn user" id="s2">
+      <div class="role">你</div>
+      <div class="bubble"><p>具体解释一下四个 criterion?</p></div>
+    </section>
+    <section class="turn assistant">
+      <div class="role">CLAUDE</div>
+      <div class="bubble">
+        <p class="lead">可以把四个 Criterion 先记成一句话：</p>
+        <blockquote><p><strong>A：你是否真正读懂文本；B：你是否解释了文本如何产生效果；C：你是否把分析组织成一篇有中心的论文；D：你是否表达得准确、清楚、流畅。</strong></p></blockquote>
+        <p>以下按本仓库的诊断性评分材料解释，不把勾选描述机械换算成分数。例子均为假设，仅用于说明写法。</p>
+        <hr>
+        <h2>Criterion A：理解诠释（Understanding and interpretation）</h2>
+        <h3>核心问题</h3>
+        <p><strong>你对文本的内容、语境、读者和交流目的，理解得是否准确而具体？</strong></p>
+        <p>主要包括：</p>
+        <ul>
+          <li><strong>语境</strong>：文本的社会、文化、发布平台和写作场合。</li>
+          <li><strong>写作对象</strong>：文本主要对谁说，他们有什么需求、处境或兴趣。</li>
+          <li><strong>交流目的</strong>：文本除了传递信息，还希望读者相信、感受或做什么。</li>
+          <li><strong>选材与手法理解</strong>：引用的证据是否恰当，是否真正理解某种手法在文本中的作用。</li>
+        </ul>
+        <h3>较弱的表现</h3>
+        <blockquote><p>这是一则环保广告，受众是大众，目的是宣传环保。作者使用对比，吸引读者。</p></blockquote>
+        <p>问题在于：“大众”“宣传环保”“吸引读者”都很笼统，也没有显示对这则特定文本的理解。</p>
+        <h3>较好的表现</h3>
+        <p>假设材料是一则面向城市消费者的公益海报，写着：</p>
+        <blockquote><p>“少用一个塑料袋，多留一片蓝海。”</p></blockquote>
+        <p>可以诠释为：</p>
+        <blockquote><p>文本将日常塑料消费与海洋生态联系起来，主要促使具有一次性用品消费习惯的城市读者重新考虑个人选择；其目的不仅是传递环保知识，更是把抽象的生态保护转化为读者可以立即实践的行动。</p></blockquote>
+        <h3>关键区别</h3>
+        <p>A 不是“背景知识写得越多越好”，而是：<strong>你对语境、读者和目的的判断是否有文本依据，并且是否足够具体。</strong></p>
+        <hr>
+        <h2>Criterion B：分析评价（Analysis and evaluation）</h2>
+        <h3>核心问题</h3>
+        <p><strong>你能否解释作者的选择为什么、以及如何对读者产生某种效果？</strong></p>
+        <p>最重要的分析链是：</p>
+        <blockquote><p><strong>作者选择 → 精确证据 → 运作机制 → 读者效果 → 交流目的 → 有依据的评价</strong></p></blockquote>
+        <h3>较弱的表现</h3>
+        <blockquote><p>作者运用对偶和对比，使语言生动形象，增强感染力，让读者印象深刻。</p></blockquote>
+        <p>这里只有手法名称和通用效果，没有解释“怎样生动”“为何有感染力”。</p>
+        <h3>较好的表现</h3>
+        <blockquote><p>“少用”与“多留”构成结构整齐的对偶，把个人消费行为与生态结果置于同一选择关系中；“一个塑料袋”与“一片蓝海”又形成尺度上的反差，使看似微小的日常行为获得更广阔的环境意义。对习惯追求生活便利的城市读者而言，这种表达降低了环保行动的门槛，使其相信个人改变也能产生价值，从而推进文本鼓励减少一次性塑料消费的目的。</p></blockquote>
+        <p>这段不只知道“用了对偶”，还解释了：</p>
+        <ol>
+          <li>对偶组织了哪两部分内容；</li>
+          <li>尺度反差产生了什么意义；</li>
+          <li>为什么这种意义能影响特定读者；</li>
+          <li>局部效果怎样服务于整体目的。</li>
+        </ol>
+        <h3>“评价”是什么？</h3>
+        <p>评价是判断选择是否有效，并说明理由，例如：</p>
+        <ul>
+          <li>为什么这种形式适合海报的快速阅读情境；</li>
+          <li>为什么某种诉求对目标读者特别有说服力；</li>
+          <li>某种表达是否可能过于简单化或有其他限制。</li>
+        </ul>
+        <p><strong>B 不是手法越多越好，而是解释是否充分、评价是否有证据。</strong></p>
+        <hr>
+        <h2>Criterion C：组织（Organization）</h2>
+        <h3>核心问题</h3>
+        <p><strong>全文是否有明确焦点，各段是否共同推进同一个中心论点？</strong></p>
+        <p>主要包括：</p>
+        <ul>
+          <li>引言是否提出清晰的分析方向；</li>
+          <li>每段是否有明确而不同的分论点；</li>
+          <li>段内证据和分析是否围绕中心句展开；</li>
+          <li>段落之间是并列、递进，还是实际上在重复；</li>
+          <li>结论是否综合全文，而非简单重复手法名称。</li>
+        </ul>
+        <h3>较弱的表现</h3>
+        <ul>
+          <li>第一段写比喻，第二段写拟人，第三段写排比；</li>
+          <li>每段结尾都重复“因此吸引读者”；</li>
+          <li>一段从版面跳到词语，再跳到文化背景，没有解释其间关系；</li>
+          <li>引言提出的读者和目的，在主体分析中消失。</li>
+        </ul>
+        <h3>较好的表现</h3>
+        <p>如果原文确实具有相应特征，可以这样推进：</p>
+        <ol>
+          <li><strong>标题和版面</strong>如何迅速界定议题、引导阅读；</li>
+          <li><strong>语言和修辞</strong>如何塑造读者对议题的态度；</li>
+          <li><strong>行动呼吁</strong>如何把读者的理解或情感转化为实际回应。</li>
+        </ol>
+        <p>这三个部分不只是“三个手法”，而是在回答一个连续的问题：<strong>文本如何先让读者注意，再让读者认同，最后促使读者行动。</strong></p>
+        <h3>关键区别</h3>
+        <p>C 不是“段落越多越好”或“连接词越多越好”，而是：<strong>即使删去所有‘首先、其次、最后’，你的观点之间仍然有清楚的逻辑关系。</strong></p>
+        <hr>
+        <h2>Criterion D：表达（Language and expression）</h2>
+        <h3>核心问题</h3>
+        <p><strong>你的分析是否写得准确、清晰、连贯，术语和句式是否受控制？</strong></p>
+        <p>主要包括：</p>
+        <ul>
+          <li>用词是否准确、具体；</li>
+          <li>句子是否通顺，逻辑关系是否明确；</li>
+          <li>文本类型和文学、语言、视觉术语是否使用正确；</li>
+          <li>语体是否适合学术分析；</li>
+          <li>是否避免重复、空泛和过度华丽的表达。</li>
+        </ul>
+        <h3>较弱的表现</h3>
+        <blockquote><p>作者用了很多非常巧妙的手法，让文本特别生动，很有感染力，所以读者会非常喜欢，也能得到很大的震撼。</p></blockquote>
+        <p>问题是“很多”“非常”“很大”都没有提供具体信息，“读者会非常喜欢”也缺乏依据。</p>
+        <h3>较好的表现</h3>
+        <blockquote><p>对偶压缩了信息，使读者能够迅速辨认个人行为与生态后果之间的联系；尺度反差则强化了微小行动的象征价值。</p></blockquote>
+        <p>后一句未必使用华丽辞藻，但<strong>概念更准确，关系更清楚</strong>。</p>
+        <hr>
+        <h2>四项标准如何区分？</h2>
+        <p>同一段文章可能呈现不同表现：</p>
+        <ul>
+          <li><strong>A 好、B 弱</strong>：读者和目的判断准确，但主体段只列手法，没有解释机制。</li>
+          <li><strong>B 好、C 弱</strong>：某一段分析很深入，但各段重复，全文没有统一方向。</li>
+          <li><strong>C 好、D 弱</strong>：结构合理，但句子含混、术语误用，使论证难以理解。</li>
+          <li><strong>D 好，不代表整体都好</strong>：语言流畅不能代替准确的诠释和深入的分析。</li>
+        </ul>
+        <p>最实用的自查方式就是分别问：</p>
+        <blockquote><p><strong>A：我读懂了吗？B：我解释清楚了吗？C：我组织好了吗？D：我表达准确吗？</strong></p></blockquote>
+      </div>
+    </section>
+
+    <section class="turn user" id="s3">
+      <div class="role">你</div>
+      <div class="bubble">
+        <p>帮我改一下这一段：</p>
+        <p class="student-text">首先，作者通過故事設置解釋金錢的由來。作者在第二段當中先敘述沒有錢的概念時，村民靠著交換物品維生，然後以問句暗示第一個轉折：「二狗子好明顯換不到錘子了，但他並不著急，為什麼呢？」這個問句設置了懸念，令讀者想繼續追看下去，更能引導讀者思想物物交換誕生的原因。作者在第四五段落解釋物物交換的經濟概念，並敘述兩者能通過物物交換達到雙重偶然性，消解故事當中的張力。在第六、七段當中，作者設置了第二個轉折，就是物物交換造成許多不方便，村民沒發滿足需求，再以「有沒有一種東西大家都要，可以當成中間物換來換去呢？」引起讀者思考貨幣作為中間物的功能，從而領悟貨幣的重要性，也有助作者過渡到貨幣的例子。作者在第九段再有第三個轉折，以「但問題來了，怎麼找零？」這個設問句，引導讀者思考初期貨幣的壞處，之後再解釋貝殼比起其他貨幣的優良之處，從而解決找零的經濟問題。作者通過三個轉折與三次的消解，以故事的波折和演變生動地解釋雙重偶然性，物物交換和貨幣的經濟學概念，同時吸引讀者繼續追看，避免讀者沉悶，達成了教育與吸引讀者興趣的兩個寫作目的。</p>
+      </div>
+    </section>
+    <section class="turn assistant">
+      <div class="role">CLAUDE</div>
+      <div class="bubble">
+        <p>未见原文和引导题，以下只根据你提供的段落修改，保留原有论点、段落依据和三处引文，不额外推断受众或出版背景。</p>
+        <p>这段的优点是<strong>三个转折及其作用都写出来了</strong>；主要问题是情节复述较多，“引起思考”“吸引读者”等效果反复出现，却没有充分说明：<strong>三个转折为什么必须依次出现，它们怎样逐步建立读者对货币的理解。</strong></p>
+        <p>修改前可以问自己：</p>
+        <blockquote><p>前一个问题的解决，怎样暴露出新的局限，并引出下一个经济学概念？</p></blockquote>
+        <h2>修改稿</h2>
+        <p>首先，作者借故事情節的層層轉折解釋金錢的由來。第二段先敘述在沒有貨幣概念時，村民依靠交換物品維生，隨即以「二狗子好明顯換不到錘子了，但他並不著急，為什麼呢？」設置第一個懸念。這個問句把二狗子反常的鎮定轉化為讀者需要解開的疑問，推動讀者在後文尋找答案；第四、五段隨之說明，物物交換的成立有賴於交換雙方正好需要對方的物品，即「雙重偶然性」，使讀者能從人物的處境理解這一經濟學概念。第六、七段進一步敘述物物交換造成的不便，再以「有沒有一種東西大家都要，可以當成中間物換來換去呢？」引出第二個問題。這次轉折不僅製造故事波折，更讓讀者意識到物物交換的局限，進而理解貨幣作為中間物的功能。第九段又以「但問題來了，怎麼找零？」指出初期貨幣的不足，隨後通過貝殼相較其他貨幣的優勢回應找零問題。三個「提出問題—解決問題」的環節層層推進：前一種方式的局限成為下一個問題的起點，抽象概念因此轉化為一條清晰的故事因果鏈。讀者在跟隨人物解決困難的過程中，逐步理解貨幣出現的必要性；接連出現的懸念亦維持了閱讀動力，使文本兼顧知識說明與閱讀趣味。</p>
+        <p class="note">这次修改把重点由“每一段講了什麼”推进到“三次转折如何共同构成由物物交换到货币的认识过程”，同时用具体机制取代了重复的“吸引读者”。</p>
+      </div>
+    </section>
+
+    <section class="turn user" id="s4">
+      <div class="role">你</div>
+      <div class="bubble"><p>能不能给 feedback 而不是直接改</p></div>
+    </section>
+    <section class="turn assistant">
+      <div class="role">CLAUDE</div>
+      <div class="bubble">
+        <p>可以，刚才我直接代改了。这次只给你<strong>诊断和修改方向</strong>，不提供改写稿。</p>
+        <p class="note"><strong>回馈范围：</strong>未见原文和引导题，以下只根据这一段的内部逻辑、分析和表达提供形成性反馈，无法核实经济学概念是否符合原文。</p>
+        <h2>文中批注</h2>
+        <blockquote><p>“首先，作者通過故事設置解釋金錢的由來。”</p></blockquote>
+        <p class="comment">【「故事設置」较笼统：本段主要分析情节转折、问句，还是整体故事结构？中心句应准确点明分析对象。】</p>
+        <blockquote><p>“更能引導讀者思想物物交換誕生的原因。”</p></blockquote>
+        <p class="comment">【前文已经说村民依靠交换物品维生，这里的“物物交换诞生”是否准确？另外，问句怎样引导读者理解相关概念，而不只是吸引他们追看？须补出中间推理；“思想”应为“思考”。】</p>
+        <blockquote><p>“並敘述兩者能通過物物交換達到雙重偶然性，消解故事當中的張力。”</p></blockquote>
+        <p class="comment">【“两者”指代不清。“双重偶然性”是重要概念，不宜只命名：交换双方及其需求之间究竟要形成什么关系？所谓“消解张力”，也应说明后文的解释怎样回应前面的问句。】</p>
+        <blockquote><p>“第二個轉折”／“第三個轉折”</p></blockquote>
+        <p class="comment">【三个转折目前较像依次复述的情节。它们为什么必须按这个顺序出现？前一种解决办法暴露了什么问题，又怎样引出下一个概念？这是本段最值得深化的分析。】</p>
+        <blockquote><p>“引導讀者思考初期貨幣的壞處……貝殼比起其他貨幣的優良之處”</p></blockquote>
+        <p class="comment">【“坏处”“优良之处”过于笼统。应准确指出初期货币在哪方面有所不足，以及贝壳的哪项特点能够回应这个问题。】</p>
+        <blockquote><p>“同時吸引讀者繼續追看，避免讀者沉悶”</p></blockquote>
+        <p class="comment">【与前文“令讀者想繼續追看下去”重复。结尾应进一步综合三个转折的共同作用，而不只是再次声称能够吸引读者。】</p>
+        <blockquote><p>“達成了教育與吸引讀者興趣的兩個寫作目的。”</p></blockquote>
+        <p class="comment">【能回扣交流目的，佳；但“达成”是有效性判断，需要依靠前文对悬念、概念解释及情节推进的具体分析来支持。】</p>
+        <h2>整体评语</h2>
+        <ol>
+          <li><strong>证据充分，方向基本明确。</strong>你选取了三处问句及其对应情节，也注意到故事既要说明经济概念，又要维持阅读趣味；问题不在证据数量，而在证据之间的推理尚未充分展开。</li>
+          <li><strong>由“复述转折”走向“解释递进”。</strong>目前每个部分主要说明“发生了什么、作者提出什么问题”；下一步应集中解释：读者为什么需要经历这三个问题，才能逐步理解货币的出现及其功能。</li>
+          <li><strong>先深化分析，再处理表达。</strong>“两者”的指代、“没发”“坏处”“优良之处”等用词需要修正，但比起润色，更重要的是明确三个转折之间的关系，避免段落成为详细的情节摘要。</li>
+        </ol>
+        <p class="note"><strong>建议的修改顺序：</strong>先在段旁画出三个转折之间的关系，标出“问题—解释—新局限”；再检查每个箭头是否在段中有相应分析，最后才压缩复述和修改用词。</p>
+      </div>
+    </section>
+
+    <section class="turn user" id="s5">
+      <div class="role">你</div>
+      <div class="bubble"><p>怎样写一篇 level 7 的 paper 1</p></div>
+    </section>
+    <section class="turn assistant">
+      <div class="role">CLAUDE</div>
+      <div class="bubble">
+        <p>先澄清一点：<strong>Level 7 是整科等级，Paper 1 本身按 A–D 四项标准评分</strong>，还涉及其他评核部分及当年的等级界限。因此，不能把某篇文章直接认定为“Level 7”。下面把它理解为：<strong>怎样争取 Paper 1 最高档的表现。</strong></p>
+        <p>结合本仓库的诊断性标准和指南建议，核心不是背出更多术语，而是：</p>
+        <blockquote><p><strong>提出一个有文本依据、具有一定洞察的中心判断，再用有选择、有推进、有评价的分析证明它。</strong></p></blockquote>
+        <h2>1. 中心论点要有“判断”，不能只是概括内容</h2>
+        <p>较普通的中心：</p>
+        <blockquote><p>作者运用故事、问句和例子解释经济学概念，吸引读者。</p></blockquote>
+        <p>更高阶的中心需要回答：</p>
+        <ul>
+          <li>这些选择之间有什么关系？</li>
+          <li>为什么这种表达方式适合这个文本？</li>
+          <li>它怎样改变读者理解概念的过程？</li>
+          <li>它最成功或最值得注意的地方是什么？</li>
+        </ul>
+        <p>也就是说，不要只证明“作者用了这些手法”，而要证明一个更深层的判断，例如：</p>
+        <ul>
+          <li>文本如何把抽象知识转化为读者能够跟随的理解过程；</li>
+          <li>多种表达手段如何共同建立某种立场；</li>
+          <li>表面轻松的形式如何服务于严肃的传播目的；</li>
+          <li>某种选择为何特别契合发布平台和目标读者。</li>
+        </ul>
+        <p><strong>最高档分析往往有独特见解，但“独特”必须来自文本证据，而不是刻意提出惊人之论。</strong></p>
+        <h2>2. 每段都要写出“为什么这样写有效”</h2>
+        <p>基本的分析链是：</p>
+        <blockquote><p><strong>选择 → 证据 → 运作机制 → 读者效果 → 交流目的 → 评价</strong></p></blockquote>
+        <p>其中最容易缺失、也最影响深度的是<strong>运作机制</strong>。</p>
+        <p>例如，指出“问句制造悬念”只是第一步，还要继续问：</p>
+        <ul>
+          <li>问句让读者产生了什么疑问？</li>
+          <li>为什么读者会关心这个疑问？</li>
+          <li>后文怎样回应它？</li>
+          <li>这个“先疑问、后解答”的过程，怎样帮助读者理解概念？</li>
+          <li>如果改成直接说明，理解过程会有什么不同？</li>
+        </ul>
+        <p>最后一个“如果换成另一种写法”的问题，特别适合揭示作者选择的独特性，但比较必须合理，不能凭空贬低其他写法。</p>
+        <h2>3. 少而深，比多而浅更接近最高档</h2>
+        <p>不要试图覆盖所有手法。应优先选择：</p>
+        <ul>
+          <li>对全文目的最重要的特征；</li>
+          <li>最能支持中心论点的证据；</li>
+          <li>能产生不同分论点的证据；</li>
+          <li>可以与其他细节建立联系的证据。</li>
+        </ul>
+        <p>每条新证据都应承担新任务。如果第二个例子仍然只证明“吸引读者”，它通常没有增加分析深度。</p>
+        <p><strong>引用不是分析，解释也不是复述。</strong>引用之后，至少要有一个句子推进读者、意义或目的，而不能只换自己的话再说一次原文。</p>
+        <h2>4. 让读者、语境和目的真正参与分析</h2>
+        <p>较弱的文章在引言写完读者和目的，主体段便不再使用它们。</p>
+        <p>较好的文章会持续问：</p>
+        <ul>
+          <li>为什么这个诉求对<strong>这组读者</strong>有效？</li>
+          <li>为什么这种长度、语气或版面适合<strong>这个发布平台</strong>？</li>
+          <li>这个局部效果怎样推进文本的<strong>深层目的</strong>？</li>
+          <li>文本希望读者最终理解、相信、感受或采取什么行动？</li>
+        </ul>
+        <p>例如，“引起思考”还不够；应说明读者思考的是什么，以及这种思考怎样使他们更接近文本希望建立的观念。</p>
+        <h2>5. 评价要有依据，不能只是“很成功”</h2>
+        <p>评价不是结尾额外加一句“作者十分高明”，而是分析过程中不断判断选择的效果：</p>
+        <ul>
+          <li>为什么这一选择适合当前的读者与语境？</li>
+          <li>多项选择如何互相配合？</li>
+          <li>它是否简化了复杂问题？这种简化是有助于入门理解，还是可能造成误解？</li>
+          <li>某项策略是否可能只对部分读者有效？</li>
+        </ul>
+        <p>局限性不是必写项。<strong>为了显得高级而硬找缺点，反而会削弱文章。</strong>有证据才评价，没有充分依据就不必勉强。</p>
+        <h2>6. 结构要体现论证的推进</h2>
+        <p>动笔前，先写出：</p>
+        <ol>
+          <li>一句中心论点；</li>
+          <li>两至三个互不重复的分论点；</li>
+          <li>每个分论点最有力的证据；</li>
+          <li>各段之间的关系：并列、递进，还是因果？</li>
+        </ol>
+        <p>如果三个主体段只是“手法一、手法二、手法三”，应继续思考能否组织成更清楚的阅读或理解过程，例如：</p>
+        <blockquote><p>引起注意 → 建立理解 → 改变态度或促成回应</p></blockquote>
+        <p>这只是可能的逻辑，不是所有文本都必须采用的结构。</p>
+        <p>结论则应综合各段，说明这些选择<strong>共同</strong>实现了什么，而不是再次列出手法名称。</p>
+        <h2>7. 语言要准确，不必刻意华丽</h2>
+        <p>最高档表达依赖的是精确，而不是堆叠形容词：</p>
+        <ul>
+          <li>“生动形象” → 具体指出突出了什么；</li>
+          <li>“增强感染力” → 说明激起了什么感受及其原因；</li>
+          <li>“引起共鸣” → 说明读者与文本中的什么经验或处境产生联系；</li>
+          <li>“达到目的” → 用前面的分析证明这一有效性判断。</li>
+        </ul>
+        <p>同时检查术语是否准确、引文是否完整、指代是否清楚。术语使用错误比不用术语更影响表达的可信度。</p>
+        <h2>一个可执行的自查法</h2>
+        <p>写完每个主体段后问四句：</p>
+        <ol>
+          <li><strong>我证明了什么观点？</strong>——不是“这一段写了什么”。</li>
+          <li><strong>我解释了手法怎样产生效果吗？</strong>——不是只写“有效、吸引、生动”。</li>
+          <li><strong>这段为什么必须放在这里？</strong>——检查段落之间的关系。</li>
+          <li><strong>它怎样帮助证明全文中心？</strong>——防止段落成为独立的文本摘要。</li>
+        </ol>
+        <p>以你刚才那段为例，向最高档推进的关键不是再增加引文，而是证明：<strong>三个转折如何构成层层推进的理解过程，以及这种叙事安排为什么同时服务于知识说明与阅读趣味。</strong></p>
+        <p class="note">最后可以把目标压缩成一句话：<br><strong>不是“我找到了很多手法”，而是“我证明了这些选择为什么以这种方式、在这个语境中、对这些读者产生了这种效果”。</strong></p>
+      </div>
+    </section>
+
+    <section class="turn user" id="s6">
+      <div class="role">你</div>
+      <div class="bubble"><p>给我一些例子</p></div>
+    </section>
+    <section class="turn assistant">
+      <div class="role">CLAUDE</div>
+      <div class="bubble">
+        <p>可以。下面借用你刚才那段<strong>经济学故事</strong>的材料，做几组“普通写法 → 更深入写法”的对照。它们是<strong>指南建议下的局部示范</strong>，不是官方认证的 Level 7 范文，也不代表必须照抄这些句子。</p>
+        <h2>1. 中心论点：从“用了什么”到“产生了什么作用”</h2>
+        <span class="label">普通写法</span>
+        <blockquote><p>作者通過三個轉折解釋經濟學概念，並吸引讀者继续阅读。</p></blockquote>
+        <span class="label">更深入的写法</span>
+        <blockquote><p>作者把雙重偶然性、物物交換的局限及貨幣的功能組織成連續的「問題—解答」，讓讀者在追隨故事轉折時逐步理解貨幣出現的必要性；敘事因此既承擔概念說明，也維持閱讀動力。</p></blockquote>
+        <h3>差别在哪里？</h3>
+        <p>后一句不只指出“三个转折”，还提出了一个可以贯穿全段的判断：<strong>故事结构本身就是解释经济概念的方式。</strong></p>
+        <hr>
+        <h2>2. 分析问句：从“制造悬念”到“解释悬念怎样帮助理解”</h2>
+        <span class="label">普通写法</span>
+        <blockquote><p>作者以「但問題來了，怎麼找零？」設置懸念，吸引讀者，然後解釋貝殼的優點。</p></blockquote>
+        <span class="label">更深入的写法</span>
+        <blockquote><p>「但問題來了」打斷了讀者以為貨幣已能解決交換困難的預期，而「怎麼找零？」則把貨幣的局限落實為具體的交易問題。這個問句因而同時推動情節與概念說明：讀者先發現「中間物」並未解決所有問題，再在後文理解貝殼為何更能應對找零的需要。</p></blockquote>
+        <h3>差别在哪里？</h3>
+        <p>后一段解释了两个机制：</p>
+        <ol>
+          <li>“但”怎样改变读者原有的预期；</li>
+          <li>“找零”怎样把抽象概念变成具体问题。</li>
+        </ol>
+        <p>所以，分析对象不只是“这里有一个问句”，而是<strong>这个问句的措辞及其出现位置怎样共同发挥作用</strong>。</p>
+        <hr>
+        <h2>3. 段落组织：从“按顺序复述”到“写出递进关系”</h2>
+        <span class="label">较弱的组织方式</span>
+        <blockquote><p>第二段是第一个转折，第四、五段解释双重偶然性；第六、七段是第二个转折；第九段是第三个转折。三个转折都吸引读者。</p></blockquote>
+        <p>这段虽然顺序清楚，但主要仍停留在内容摘要。</p>
+        <span class="label">更有分析性的组织思路</span>
+        <blockquote><p>第一次解答讓讀者理解物物交換成立的條件，第二次轉折則揭示這種交換方式的局限，使貨幣作為中間物的需要自然浮現；第三次轉折再指出初期貨幣仍未解決的交易問題。每次解答因而都不是故事分析的終點，而是把讀者帶向下一層概念的台阶。</p></blockquote>
+        <h3>差别在哪里？</h3>
+        <p>重点由“每一段发生了什么”转为“为什么必须按照这次序，读者才能逐步理解”。</p>
+        <hr>
+        <h2>4. 受众分析：从“吸引读者”到“为什么对这类读者有效”</h2>
+        <span class="label">普通写法</span>
+        <blockquote><p>故事生动有趣，令读者容易理解，避免沉闷。</p></blockquote>
+        <span class="label">假设原文明确面向经济学初学者，可以写</span>
+        <blockquote><p>對沒有經濟學基礎的讀者而言，「雙重偶然性」本身是較抽象的術語；文本先呈現交換雙方需求無法配合的具體處境，再引入相應概念，使讀者先理解故事中的問題，再掌握解释这一问题的术语，降低了概念的入門難度。</p></blockquote>
+        <h3>差别在哪里？</h3>
+        <p>后一段说明了：</p>
+        <ul>
+          <li>读者为什么需要这种表达；</li>
+          <li>抽象概念难在哪里；</li>
+          <li>故事怎样降低理解难度。</li>
+        </ul>
+        <p>不过，<strong>“经济学初学者”必须有原文依据</strong>。如果材料没有说明受众，就不能为了显得具体而自行添加。</p>
+        <hr>
+        <h2>5. 评价：从“作者很成功”到“成功在哪里”</h2>
+        <span class="label">普通写法</span>
+        <blockquote><p>因此，作者非常成功地达到了教育与娱乐的双重目的。</p></blockquote>
+        <span class="label">更深入的写法</span>
+        <blockquote><p>這種安排的有效性，在於經濟學概念並非外加於故事，而是由人物遭遇的困難逐步引出。讀者先看到交換為何受阻，再接触解释困境的概念，因此知識說明推動了情節，情節也為知識提供了具體依據；兩者並非彼此分離，而是共同實現文本的教育目的。</p></blockquote>
+        <h3>差别在哪里？</h3>
+        <p>“非常成功”只是结论；后一段则给出了有效性的依据：<strong>情节与概念互相支持，而不是故事负责娱乐、解释负责教育。</strong></p>
+        <hr>
+        <h2>这些例子的共同规律</h2>
+        <p>普通写法往往停在：</p>
+        <blockquote><p>手法／情节 → 吸引读者 → 达到目的</p></blockquote>
+        <p>更深入的写法会补上：</p>
+        <blockquote><p><strong>具体措辞或结构 → 改变读者的什么预期或认识 → 读者如何一步步理解 → 为什么这有助于整体目的</strong></p></blockquote>
+        <p class="note">你现在最值得练习的不是整段重写，而是挑自己段中的一句“吸引读者”或“引起思考”，在后面补一句：<strong>读者先意识到什么，接着又理解什么？</strong></p>
+      </div>
+    </section>
+
+    <footer class="footer">根据本次对话整理 · 形成性学习材料 · 非官方 IB 评分文件</footer>
+  </main>
+  <script>
+    document.getElementById('print').addEventListener('click', function () { window.print(); });
+  </script>
+</body>
+</html>
