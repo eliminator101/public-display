@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An automatically updated directory of HTML pages in this repository.">
+  <title>Public Display</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #f5f4f1;
+      --paper: #ffffff;
+      --ink: #252525;
+      --muted: #6f6b66;
+      --line: #e3dfd8;
+      --accent: #b55f3d;
+      --accent-soft: #f7eee8;
+      --error: #9c352d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--background);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK TC", Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(760px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 72px 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 7vw, 52px);
+      line-height: 1.15;
+      letter-spacing: -.03em;
+    }
+
+    .intro {
+      max-width: 590px;
+      margin: 16px 0 30px;
+      color: var(--muted);
+    }
+
+    .directory {
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(40, 35, 30, .04);
+    }
+
+    .directory-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    #page-count {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    button {
+      padding: 7px 13px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 0;
+      border-radius: 8px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover { background: #f1dfd3; }
+    button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    button:disabled { cursor: wait; opacity: .6; }
+
+    #status {
+      margin: 0;
+      padding: 28px 22px;
+      color: var(--muted);
+    }
+
+    #status:empty { display: none; }
+    #status.error { color: var(--error); }
+
+    .page-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .page-list li + li { border-top: 1px solid var(--line); }
+
+    .page-list a {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 5px 18px;
+      align-items: center;
+      padding: 22px;
+      color: inherit;
+      text-decoration: none;
+      transition: background .15s ease;
+    }
+
+    .page-list a:hover { background: #faf8f6; }
+    .page-list a:hover .page-name { color: var(--accent); }
+
+    .page-name {
+      overflow-wrap: anywhere;
+      font-size: 17px;
+      font-weight: 700;
+      transition: color .15s ease;
+    }
+
+    .page-path {
+      grid-column: 1;
+      overflow-wrap: anywhere;
+      color: var(--muted);
+      font-family: Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .arrow {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      color: var(--accent);
+      font-size: 22px;
+    }
+
+    .note {
+      margin: 18px 4px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    noscript p {
+      padding: 22px;
+      color: var(--error);
+    }
+
+    @media (max-width: 520px) {
+      main { width: min(100% - 28px, 760px); padding: 42px 0; }
+      .directory-header, .page-list a { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Public Display</p>
+      <h1>HTML pages</h1>
+      <p class="intro">Shortcuts to every HTML page in this repository. This directory updates itself from GitHub whenever it loads.</p>
+    </header>
+
+    <section class="directory" aria-label="Repository pages">
+      <div class="directory-header">
+        <span id="page-count">Finding pages…</span>
+        <button id="refresh" type="button">Refresh</button>
+      </div>
+      <p id="status" role="status" aria-live="polite">Loading the repository file list…</p>
+      <ul id="page-list" class="page-list"></ul>
+      <noscript><p>JavaScript is required to load the repository’s file list.</p></noscript>
+    </section>
+
+    <p class="note">Add an HTML file to the GitHub repository and refresh this page. No manual editing is needed.</p>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const OWNER = "eliminator101";
+      const REPOSITORY = "public-display";
+      const API_ROOT = `https://api.github.com/repos/${OWNER}/${REPOSITORY}`;
+
+      const count = document.querySelector("#page-count");
+      const status = document.querySelector("#status");
+      const list = document.querySelector("#page-list");
+      const refreshButton = document.querySelector("#refresh");
+      let loading = false;
+
+      async function fetchJson(url) {
+        const response = await fetch(url, {
+          headers: {
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28"
+          },
+          cache: "no-store"
+        });
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          let message = data.message || `GitHub returned an error (${response.status}).`;
+          if (response.status === 403 && response.headers.get("X-RateLimit-Remaining") === "0") {
+            const reset = Number(response.headers.get("X-RateLimit-Reset")) * 1000;
+            const resetTime = new Date(reset).toLocaleTimeString();
+            message = `GitHub’s request limit has been reached. Try again after ${resetTime}.`;
+          }
+          throw new Error(message);
+        }
+
+        return data;
+      }
+
+      function pageName(path) {
+        const filename = path.split("/").pop();
+        return filename
+          .replace(/\.html?$/i, "")
+          .replace(/[_-]+/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function pageUrl(path) {
+        const encodedPath = path.split("/").map(encodeURIComponent).join("/");
+        return new URL(encodedPath, new URL("./", window.location.href)).href;
+      }
+
+      function renderPages(paths) {
+        const fragment = document.createDocumentFragment();
+
+        for (const path of paths) {
+          const item = document.createElement("li");
+          const link = document.createElement("a");
+          const name = document.createElement("span");
+          const filePath = document.createElement("span");
+          const arrow = document.createElement("span");
+
+          link.href = pageUrl(path);
+          name.className = "page-name";
+          name.textContent = pageName(path);
+          filePath.className = "page-path";
+          filePath.textContent = path;
+          arrow.className = "arrow";
+          arrow.setAttribute("aria-hidden", "true");
+          arrow.textContent = "↗";
+
+          link.append(name, filePath, arrow);
+          item.append(link);
+          fragment.append(item);
+        }
+
+        list.replaceChildren(fragment);
+      }
+
+      async function loadPages() {
+        if (loading) return;
+        loading = true;
+        refreshButton.disabled = true;
+        refreshButton.textContent = "Loading…";
+        count.textContent = "Finding pages…";
+        status.className = "";
+        status.textContent = "Loading the repository file list…";
+        list.replaceChildren();
+
+        try {
+          const repository = await fetchJson(API_ROOT);
+          const branch = encodeURIComponent(repository.default_branch);
+          const tree = await fetchJson(`${API_ROOT}/git/trees/${branch}?recursive=1`);
+          const pages = tree.tree
+            .filter(entry => entry.type === "blob" && /\.html?$/i.test(entry.path) && entry.path.toLowerCase() !== "index.html")
+            .map(entry => entry.path)
+            .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }));
+
+          renderPages(pages);
+          count.textContent = `${pages.length} ${pages.length === 1 ? "page" : "pages"}`;
+          status.textContent = pages.length === 0 ? "No HTML pages were found in this repository." : "";
+
+          if (tree.truncated) {
+            status.textContent = "GitHub returned only part of this large repository, so some pages may be missing.";
+          }
+        } catch (error) {
+          count.textContent = "Directory unavailable";
+          status.className = "error";
+          status.textContent = `Couldn’t load the file list: ${error.message} If this is a private repository, sign-in-free browser access is not available.`;
+        } finally {
+          loading = false;
+          refreshButton.disabled = false;
+          refreshButton.textContent = "Refresh";
+        }
+      }
+
+      refreshButton.addEventListener("click", loadPages);
+      loadPages();
+    })();
+  </script>
+</body>
+</html>
